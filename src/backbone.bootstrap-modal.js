@@ -179,6 +179,8 @@
       $backdrop.css('z-index', backdropIndex + numModals);
       this.$el.css('z-index', elIndex + numModals);
 
+
+
       if (this.options.allowCancel) {
         $backdrop.one('click', function() {
           if (self.options.content && self.options.content.trigger) {
@@ -187,7 +189,12 @@
 
           self.trigger('cancel');
         });
-        
+
+        // close dialog on window address hash change
+        $(window).on('hashchange', function() {
+          self.trigger('cancel');
+        }); 
+
         $(document).one('keyup.dismiss.modal', function (e) {
           e.which == 27 && self.trigger('cancel');
 
